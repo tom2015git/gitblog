@@ -523,11 +523,15 @@ class Gitblog extends CI_Controller {
 	
 	public function setconfig()
 	{	
+		$theme = $this->input->get_post("theme", TRUE);
 		//$theme=$this->input->post('theme');
+		//echo "<script LANGUAGE='JavaScript'>alert(\"$theme\");</script>";
 		//var_dump($theme);
 		//$pagesize=$_POST['pagesize'];
 		
 		//$this->confObj['theme'] =$theme;
+		$this->load->library('Twig', array("theme" =>$theme));
+		//$this->init();
 		//$this->confObj['blog']['pageSize']=$pagesize;
 		
 		$this->index();
@@ -535,7 +539,7 @@ class Gitblog extends CI_Controller {
 	
 	public function delete($filename)
 	{	
-		echo "<script LANGUAGE='JavaScript'>alert(\"$filename\");</script>";
+		//echo "<script LANGUAGE='JavaScript'>alert(\"$filename\");</script>";
 		//$filename;
 		$path='./blog/'.$filename.".md";
 		if(file_exists($path))
