@@ -325,6 +325,7 @@ class Gitblog extends CI_Controller {
 	
 	//标签下的博客列表
 	public function tags($tagId, $pageNo=1) {
+	//echo "<script LANGUAGE='JavaScript'>alert(\"$tagId\");</script>";
 		if ($this->loadOutCache()) return;
 		
 		$this->pageName = "tags";
@@ -409,6 +410,7 @@ class Gitblog extends CI_Controller {
 	
 	//博客详情页
 	public function blog($blogId=null) {
+		//echo "<script LANGUAGE='JavaScript'>alert(\"$blogId\");</script>";
 		if ($this->loadOutCache()) return;
 		
 		if (!$blogId) {
@@ -486,5 +488,61 @@ class Gitblog extends CI_Controller {
 	//计算缓存Key
 	private function getCacheKey() {
 		return $this->confObj['theme'] . "_" . md5(uri_string()) . ".html"; //category/1460001917
+	}
+
+	public function set($pageNo=1)
+	{	
+		$this->load->helper('form');
+	
+		if ($this->loadOutCache()) return;
+		
+		$pageNo = (int)$pageNo;
+		$pageSize = $this->confObj['blog']['pageSize'];
+		$pageBarSize = $this->confObj['blog']['pageBarSize'];
+		
+		$pages = $this->markdown->getTotalPages($pageSize);
+		
+		if ($pageNo <= 0) {
+			$pageNo = 1;
+		}
+		
+		if ($pageNo > $pages) {
+			$pageNo = $pages;
+		}
+		
+		$pageData = $this->markdown->getBlogsByPage($pageNo, $pageSize);
+		$pagination = $this->pager->splitPage($pages, $pageNo, $pageBarSize);
+		$this->setData("pagination", $pagination);
+		
+		$this->setData("pageName", "home");
+		$this->setData("pageNo", $pageNo);
+		$this->setData("pages", $pageData['pages']);
+		$this->setData("blogList", $pageData['blogList']);
+		return $this->render('set.html');
+	}
+	
+	public function setconfig()
+	{	
+		//$theme=$this->input->post('theme');
+		//var_dump($theme);
+		//$pagesize=$_POST['pagesize'];
+		
+		//$this->confObj['theme'] =$theme;
+		//$this->confObj['blog']['pageSize']=$pagesize;
+		
+		$this->index();
+	}
+	
+	public function delete($filename)
+	{	
+		echo "<script LANGUAGE='JavaScript'>alert(\"$filename\");</script>";
+		//$filename;
+		$path='./blog/'.$filename.".md";
+		if(file_exists($path))
+		{
+			unlink($path);
+		}
+		
+		$this->index();
 	}
 }

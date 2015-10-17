@@ -65,6 +65,10 @@ $route['archive/(:num).html']				= 'gitblog/archive/$1';
 
 $route['blog/(.+).html'] 					= 'gitblog/blog';
 
+$route['set'] 					            = 'gitblog/set';
+$route['setconfig'] 					    = 'gitblog/setconfig';
+$route['delete/(:any)'] 					= 'gitblog/delete/$1';
+
 $route['search'] 							= 'gitblog/search';
 
 $route['export'] 							= 'gitblog/exportSite';

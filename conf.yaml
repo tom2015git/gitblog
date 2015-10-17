@@ -3,8 +3,8 @@
 url: /
 title: Your-GitBlog
 subtitle: 自豪地采用GitBlog
-theme: simple
-enableCache: true
+theme: default
+enableCache: false
 highlight: true
 mathjax: false
 duoshuo:
